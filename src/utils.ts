@@ -1,13 +1,31 @@
 import { parse } from './parse.js';
 import { compare, eq } from './compare.js';
 
+const smallNums: string[] = [];
+for (let i = 0; i < 100; i++) smallNums[i] = String(i);
+
+const validCache: Record<string, string | null | undefined> = Object.create(null);
+let validCacheSize = 0;
+
+function numStr(n: number): string {
+  return n < 100 ? smallNums[n] : String(n);
+}
+
 export function valid(v: string): string | null {
+  const cached = validCache[v];
+  if (cached !== undefined) return cached;
   const p = parse(v);
-  return p
-    ? p.pre
-      ? `${p.major}.${p.minor}.${p.patch}-${p.pre.join('.')}`
-      : `${p.major}.${p.minor}.${p.patch}`
-    : null;
+  if (!p) { validCache[v] = null; validCacheSize++; return null; }
+  const result = p.pre
+    ? numStr(p.major) + '.' + numStr(p.minor) + '.' + numStr(p.patch) + '-' + p.pre.join('.')
+    : numStr(p.major) + '.' + numStr(p.minor) + '.' + numStr(p.patch);
+  if (validCacheSize >= 2048) {
+    for (const k in validCache) delete validCache[k];
+    validCacheSize = 0;
+  }
+  validCache[v] = result;
+  validCacheSize++;
+  return result;
 }
 
 export function clean(v: string): string | null {
@@ -34,19 +52,20 @@ export function prerelease(v: string): (string | number)[] | null {
   return p?.pre || null;
 }
 
+const coerceRe = /(\d+)(?:\.(\d+))?(?:\.(\d+))?/;
+
 export function coerce(v: string | number): string | null {
-  if (typeof v === 'number') v = String(v);
+  if (typeof v === 'number') return v + '.0.0';
   if (typeof v !== 'string') return null;
-  const match = v.match(/(\d+)(?:\.(\d+))?(?:\.(\d+))?/);
-  return match ? `${match[1]}.${match[2] || 0}.${match[3] || 0}` : null;
+  const match = v.match(coerceRe);
+  return match ? (match[1] + '.' + (match[2] || '0') + '.' + (match[3] || '0')) : null;
 }
 
 export function diff(
   a: string,
   b: string
 ): 'major' | 'premajor' | 'minor' | 'preminor' | 'patch' | 'prepatch' | 'prerelease' | null {
-  const pa = parse(a),
-    pb = parse(b);
+  const pa = parse(a), pb = parse(b);
   if (!pa || !pb || eq(a, b)) return null;
   if (pa.major !== pb.major) return pa.pre || pb.pre ? 'premajor' : 'major';
   if (pa.minor !== pb.minor) return pa.pre || pb.pre ? 'preminor' : 'minor';

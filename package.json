@@ -1,7 +1,7 @@
 {
   "name": "pico-semver",
   "version": "1.0.0",
-  "description": "Tiny, fast semver parsing and comparison. Drop-in replacement for semver, 30x faster.",
+  "description": "Tiny, fast semver parsing and comparison. Drop-in replacement for semver, up to 37x faster.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -53,7 +53,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lulzx/pico-semver.git"
+    "url": "git+https://github.com/lulzx/pico-semver.git"
   },
   "engines": {
     "node": ">=14"
