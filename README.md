@@ -4,8 +4,8 @@ Tiny, fast semver parsing and comparison. Drop-in replacement for `semver`.
 
 ## Features
 
-- **Fast**: 5-30x faster than `semver` (17x average)
-- **Tiny**: Zero dependencies, minimal footprint
+- **Fast**: Up to 37x faster than `semver`
+- **Tiny**: Zero dependencies, 6.4 kB gzipped
 - **Tree-shakeable**: Modular ESM with subpath exports
 - **TypeScript**: Full type definitions included
 
@@ -13,13 +13,13 @@ Tiny, fast semver parsing and comparison. Drop-in replacement for `semver`.
 
 | Operation | semver | pico-semver | Speedup |
 |-----------|--------|-------------|---------|
-| `parse` | 6.1M ops/s | 182.5M ops/s | **30x** |
-| `compare` | 7.3M ops/s | 108.8M ops/s | **15x** |
-| `satisfies` | 2.5M ops/s | 65.0M ops/s | **26x** |
-| `gt` | 7.3M ops/s | 108.3M ops/s | **15x** |
-| `valid` | 6.1M ops/s | 42.3M ops/s | **7x** |
-| `maxSatisfying` | 709K ops/s | 15.6M ops/s | **22x** |
-| `inc` | 11.4M ops/s | 60.3M ops/s | **5x** |
+| `parse` | 6M ops/s | 184M ops/s | **30x** |
+| `compare` | 7M ops/s | 106M ops/s | **15x** |
+| `satisfies` | 2.4M ops/s | 66M ops/s | **28x** |
+| `gt` | 7M ops/s | 109M ops/s | **15x** |
+| `valid` | 6M ops/s | 225M ops/s | **37x** |
+| `maxSatisfying` | 700K ops/s | 19M ops/s | **28x** |
+| `inc` | 11M ops/s | 64M ops/s | **6x** |
 
 Run `node benchmark.js` to reproduce.
 
