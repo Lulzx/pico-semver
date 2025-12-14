@@ -1,0 +1,65 @@
+{
+  "name": "pico-semver",
+  "version": "1.0.0",
+  "description": "Tiny, fast semver parsing and comparison. Drop-in replacement for semver, 30x faster.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./parse": {
+      "types": "./dist/parse.d.ts",
+      "import": "./dist/parse.js"
+    },
+    "./compare": {
+      "types": "./dist/compare.d.ts",
+      "import": "./dist/compare.js"
+    },
+    "./range": {
+      "types": "./dist/range.d.ts",
+      "import": "./dist/range.js"
+    },
+    "./inc": {
+      "types": "./dist/inc.d.ts",
+      "import": "./dist/inc.js"
+    },
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "import": "./dist/utils.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run build && node tests.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "semver",
+    "version",
+    "fast",
+    "parse",
+    "compare",
+    "range",
+    "satisfies"
+  ],
+  "author": "Lulzx",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lulzx/pico-semver.git"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "devDependencies": {
+    "semver": "^7.7.3",
+    "typescript": "^5.0.0"
+  }
+}
